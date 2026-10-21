@@ -1,0 +1,6 @@
+Roof_Type,Runoff_Coefficient_Min,Runoff_Coefficient_Max
+Concrete,0.8,0.9
+Tile,0.75,0.85
+Metal,0.85,0.95
+Asbestos Sheet,0.7,0.85
+Thatched,0.2,0.4

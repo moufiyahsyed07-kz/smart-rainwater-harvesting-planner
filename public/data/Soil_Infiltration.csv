@@ -1,0 +1,7 @@
+Soil_Type,Infiltration_Min_mm_per_hour,Infiltration_Max_mm_per_hour
+Clay,1,5
+Silty,5,15
+Clay Loam,5,20
+Loamy,10,30
+Sandy Loam,20,60
+Sandy,25,100

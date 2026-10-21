@@ -1,0 +1,7 @@
+Scenario_Name,Roof_Area_sqft,Roof_Type,Family_Size,Tank_Capacity_Litres,Budget_INR
+Low Budget,600,Concrete,3,1000,10000
+Small Family,800,Concrete,2,2000,15000
+Medium Family,1000,Concrete,4,2000,20000
+Large Family,1500,Tile,6,5000,35000
+Eco Friendly,1200,Metal,4,2000,25000
+High Storage,2000,Concrete,5,5000,40000
