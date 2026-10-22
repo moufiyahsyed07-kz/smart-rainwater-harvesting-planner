@@ -1,4 +1,3 @@
-
 "use client";
 
 import { useState } from "react";
@@ -361,6 +360,17 @@ const planningRecommendation =
 
 <main className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-teal-50 text-slate-900">
   <header className="relative overflow-hidden bg-gradient-to-r from-teal-950 via-teal-900 to-emerald-800 px-6 py-12 text-white shadow-lg md:py-16">
+            {/* Background image */}
+        <div className="pointer-events-none absolute inset-0">
+          <img
+            src="/rainwater-hero.jpeg"
+            alt=""
+            className="h-full w-full object-cover object-center"
+          />
+          <div className="absolute inset-0 bg-gradient-to-br from-slate-950/80 via-teal-950/75 to-emerald-950/80" />
+        </div>
+
+
     <div className="pointer-events-none absolute -right-16 -top-24 h-72 w-72 rounded-full bg-teal-400/10 blur-3xl" />
 
     <div className="pointer-events-none absolute -bottom-24 right-1/3 h-64 w-64 rounded-full bg-emerald-300/10 blur-3xl" />
@@ -688,66 +698,82 @@ onChange={(e) => {
 
           <div className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
             <h2 className="text-lg font-bold">Planning summary</h2>
-            <div className="mt-5 rounded-xl border border-slate-200 bg-white p-4">
+
+<div className="mt-5 rounded-xl border border-slate-200 bg-white p-4">
   <h3 className="text-base font-semibold text-slate-800">
     Rainfall & Water Demand
   </h3>
   <p className="mt-1 text-sm text-slate-500">
-    Estimated annual harvest compared with 30-day water demand.
+    Annual harvest compared with 30-day water demand.
   </p>
 
-  <div className="mt-4 space-y-4">
-    <div>
-      <div className="mb-1 flex justify-between text-sm">
-        <span>Annual harvest</span>
-        <span>{Math.round(harvestLitres).toLocaleString()} L</span>
-      </div>
-      <div className="h-4 overflow-hidden rounded-full bg-slate-100">
-        <div
-          className="h-full rounded-full bg-teal-600"
-          style={{
-            width: `${
-              harvestLitres > 0
-                ? Math.max(
-                    2,
-                    (harvestLitres /
-                      Math.max(harvestLitres, daily * 30, 1)) *
-                      100
-                  )
-                : 0
-            }%`,
-          }}
-        />
-      </div>
-    </div>
+  {(() => {
+    const harvest = Math.max(0, harvestLitres);
+    const demand = Math.max(0, daily * 30);
+    const maxValue = Math.max(harvest, demand, 1);
+    const chartHeight = 180;
+    const barWidth = 64;
+    const harvestHeight = (harvest / maxValue) * chartHeight;
+    const demandHeight = (demand / maxValue) * chartHeight;
 
-    <div>
-      <div className="mb-1 flex justify-between text-sm">
-        <span>30-day water demand</span>
-        <span>
-          {Math.round(daily * 30).toLocaleString()} L
-        </span>
+    return (
+      <div className="mt-5">
+        <div className="flex items-end justify-center gap-12 border-b border-slate-200 px-4">
+          <div className="flex flex-col items-center">
+            <span className="mb-2 text-xs font-semibold text-teal-700">
+              {Math.round(harvest).toLocaleString()} L
+            </span>
+            <div
+              className="rounded-t-lg bg-teal-500"
+              style={{
+                width: `${barWidth}px`,
+                height: `${Math.max(harvest > 0 ? 4 : 0, harvestHeight)}px`,
+              }}
+            />
+          </div>
+
+          <div className="flex flex-col items-center">
+            <span className="mb-2 text-xs font-semibold text-sky-700">
+              {Math.round(demand).toLocaleString()} L
+            </span>
+            <div
+              className="rounded-t-lg bg-sky-500"
+              style={{
+                width: `${barWidth}px`,
+                height: `${Math.max(demand > 0 ? 4 : 0, demandHeight)}px`,
+              }}
+            />
+          </div>
+        </div>
+
+        <div className="mt-3 flex justify-center gap-8 text-center text-sm">
+          <div className="w-24">
+            <span className="font-medium text-slate-700">
+              Annual harvest
+            </span>
+          </div>
+          <div className="w-24">
+            <span className="font-medium text-slate-700">
+              30-day demand
+            </span>
+          </div>
+        </div>
+
+        <div className="mt-4 flex flex-wrap justify-center gap-4 text-xs text-slate-600">
+          <span className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded-sm bg-teal-500" />
+            Harvest
+          </span>
+          <span className="flex items-center gap-2">
+            <span className="h-3 w-3 rounded-sm bg-sky-500" />
+            Water demand
+          </span>
+        </div>
       </div>
-      <div className="h-4 overflow-hidden rounded-full bg-slate-100">
-        <div
-          className="h-full rounded-full bg-sky-500"
-          style={{
-            width: `${
-              daily > 0
-                ? Math.max(
-                    2,
-                    ((daily * 30) /
-                      Math.max(harvestLitres, daily * 30, 1)) *
-                      100
-                  )
-                : 0
-            }%`,
-          }}
-        />
-      </div>
-    </div>
-  </div>
+    );
+  })()}
 </div>
+
   
             
 {result && (
