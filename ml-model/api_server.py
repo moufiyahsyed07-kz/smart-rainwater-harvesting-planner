@@ -3,6 +3,7 @@ from pathlib import Path
 
 import joblib
 import pandas as pd
+import os
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field
@@ -22,13 +23,22 @@ DISTRICTS = sorted(rainfall_df["District"].dropna().unique().tolist())
 
 app = FastAPI(title="AI Rainwater Planner API")
 
+
+FRONTEND_URL = os.getenv("FRONTEND_URL", "").rstrip("/")
+
+allowed_origins = ["http://localhost:3000"]
+
+if FRONTEND_URL:
+    allowed_origins.append(FRONTEND_URL)
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["http://localhost:3000"],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["GET", "POST"],
     allow_headers=["*"],
 )
+
 
 
 class PredictionRequest(BaseModel):
